@@ -65,3 +65,25 @@ CREATE TABLE pedidos (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (produto_id) REFERENCES produtos(id)
 );
+
+1. Como Executar o Projeto:
+Clone o repositório
+
+2. Configurar o Banco de Dados:
+
+Crie um banco de dados MySQL usando o script fornecido.
+Configure as credenciais do banco de dados no arquivo de configuração do seu projeto.
+Instalar Dependências:
+
+3. Se estiver usando Composer (para Laravel), execute
+
+4. Executar o Servidor:
+
+Para PHP puro, você pode usar o servidor embutido
+
+5. Acessar a Aplicação:
+
+Abra o navegador e acesse http://localhost:8000 ou http://localhost:8000 (dependendo do servidor que você está usando).
+
+Contribuição
+Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.
