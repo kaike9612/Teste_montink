@@ -1,2 +1,67 @@
-# Teste_montink
-Um mini ERP para controle de Pedidos, Produtos, Cupons e Estoque
+Este projeto é um sistema de gerenciamento simples (ERP) que permite o controle de pedidos, produtos, cupons e estoque. O sistema foi desenvolvido utilizando PHP e MySQL, com uma interface de usuário responsiva construída com Bootstrap.
+
+## Tecnologias Utilizadas
+
+- **Backend**: PHP (puro ou CodeIgniter 3)
+- **Banco de Dados**: MySQL
+- **Frontend**: HTML, CSS, Bootstrap
+- **API de CEP**: ViaCEP
+
+## Funcionalidades
+
+- **Cadastro de Produtos**: Permite a criação e atualização de produtos com informações como nome, preço, variações e controle de estoque.
+- **Gerenciamento de Estoque**: Associa produtos ao estoque e permite o controle de quantidades.
+- **Carrinho de Compras**: Gerencia um carrinho em sessão, calculando o subtotal e o frete com base nas regras definidas.
+- **Cálculo de Frete**: Implementa regras de frete com base no subtotal do pedido.
+- **Cupons de Desconto**: Permite a criação e gerenciamento de cupons com validade e regras de valor mínimo.
+- **Envio de E-mail**: Envia um e-mail ao cliente ao finalizar o pedido.
+- **Webhook**: Recebe atualizações de status de pedidos e atualiza o banco de dados conforme necessário.
+
+## Estrutura do Banco de Dados
+
+O banco de dados é composto por quatro tabelas:
+
+1. **produtos**: Armazena informações sobre os produtos.
+2. **estoque**: Controla a quantidade de cada produto disponível.
+3. **cupons**: Gerencia os cupons de desconto.
+4. **pedidos**: Registra os pedidos realizados pelos clientes.
+
+### Script de Criação do Banco de Dados
+
+```sql
+CREATE DATABASE mini_erp;
+
+USE mini_erp;
+
+CREATE TABLE produtos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(255) NOT NULL,
+    preco DECIMAL(10, 2) NOT NULL,
+    variacoes TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE estoque (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    produto_id INT NOT NULL,
+    quantidade INT NOT NULL,
+    FOREIGN KEY (produto_id) REFERENCES produtos(id)
+);
+
+CREATE TABLE cupons (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    codigo VARCHAR(50) NOT NULL,
+    validade DATE NOT NULL,
+    valor_minimo DECIMAL(10, 2) NOT NULL,
+    desconto DECIMAL(10, 2) NOT NULL
+);
+
+CREATE TABLE pedidos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    produto_id INT NOT NULL,
+    quantidade INT NOT NULL,
+    subtotal DECIMAL(10, 2) NOT NULL,
+    status ENUM('pendente', 'concluido', 'cancelado') DEFAULT 'pendente',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (produto_id) REFERENCES produtos(id)
+);
